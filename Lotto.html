@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로또 추첨</title>
+    <link rel="stylesheet" href="./CSS/Lotto.css">
+</head>
+
+<body>
+    <div id="lotto-container">
+        <h2>Lotto Draw</h2>
+        <button onclick="generateLottoNumbers()">
+            Press Button</button>
+        <button onclick="reset()">Reset</button>
+        <div id="result"></div>
+    </div>
+
+    <div id="lotto-history">
+        <h3>Lottery Record</h3>
+        <ol id="history"></ol>
+    </div>
+
+    <script>
+        function generateLottoNumbers() {
+            var numbers = [];
+            while (numbers.length < 6) {
+                var randomNum = Math.floor(Math.random() * 45) + 1;
+                if (numbers.indexOf(randomNum) === -1) {
+                    numbers.push(randomNum);
+                }
+            }
+
+            numbers.sort(function (a, b) {
+                return a - b;
+            });
+
+            displayResult(numbers);
+            updateHistory(numbers);
+        }
+
+        function displayResult(numbers) {
+            var resultContainer = document.getElementById("result");
+            resultContainer.innerHTML = "";
+            for (var i = 0; i < numbers.length; i++) {
+                var lottoNumber = document.createElement("div");
+                lottoNumber.className = "lotto-number";
+                lottoNumber.textContent = numbers[i];
+                resultContainer.appendChild(lottoNumber);
+            }
+        }
+
+        function reset() {
+            var resultContainer = document.getElementById("result");
+            var historyContainer = document.getElementById("history");
+
+            resultContainer.innerHTML = "";
+            historyContainer.innerHTML = "";
+        }
+
+        function updateHistory(numbers) {
+            var historyContainer = document.getElementById("history");
+            var historyItem = document.createElement("li");
+            historyItem.textContent = numbers.join(", ");
+            historyContainer.appendChild(historyItem);
+        }
+    </script>
+
+</body>
+
+</html>
